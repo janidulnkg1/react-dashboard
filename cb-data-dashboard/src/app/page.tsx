@@ -1,12 +1,15 @@
 import Head from 'next/head'
 import styles from "@/styles/Home.module.css";
 import Dashboard from '@/pages/Dashboard/Dashboard';
-import Login from '@/pages/Login';
+import Login from '@/pages/components/Login';
 import Header from '@/pages/components/Headers/Header';
 import SideMenu from '@/pages/components/SideMenu';
 import Settings from '@/pages/Dashboard/Settings';
+import {useSession} from "next-auth/react";
 
 export default function Home() {
+  const { data: session } = useSession();
+
   return (
     <>
       <Head>
@@ -17,6 +20,14 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
       <Header />
+                {
+                    session && (
+                    <>
+                        <SideMenu />
+                        <Login />
+                    </>
+                    )
+                }
       <SideMenu />
         
       </main>
